@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'loginPage.dart';
 
 
 class SignUpPage extends StatefulWidget {
@@ -12,6 +11,26 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  Widget _backButton() {
+    return InkWell(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Row(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
+              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
+            ),
+            Text('Back',
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _entryField(String title, {bool isPassword = false, String hintText = '', Icon icon}) {
     return Container(
@@ -85,8 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
           InkWell(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginPage()));
+              Navigator.pop(context);
             },
             child: Text(
               'Login',
@@ -117,43 +135,48 @@ class _SignUpPageState extends State<SignUpPage> {
       body: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height * 1.5,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                _logo(),
-                _entryField(
-                  "Username", 
-                  hintText: "Type your name here",
-                  icon: Icon(Icons.person_pin, color: Colors.black, size: 50.0,),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    _logo(),
+                    _entryField(
+                      "Username", 
+                      hintText: "Type your name here",
+                      icon: Icon(Icons.person_pin, color: Colors.black, size: 50.0,),
+                    ),
+                    _entryField(
+                      "Id number", 
+                      hintText: "Type your id number here",
+                      icon: Icon(Icons.format_list_numbered, color: Colors.black, size: 50.0,)
+                    ),
+                    _entryField(
+                      "Email",
+                      hintText: "Type your email here",
+                      icon: Icon(Icons.email, color: Colors.black, size: 50.0,)
+                    ),
+                    _entryField(
+                      "Phone number", 
+                      hintText: "Type your phone number here",
+                      icon: Icon(Icons.phone_in_talk, color: Colors.black, size: 50.0,)
+                    ),
+                    _entryField(
+                      "Password",
+                      isPassword: true,
+                      hintText: "Type your password here",
+                      icon: Icon(Icons.lock, color: Colors.black, size: 50.0,)
+                    ),
+                    _submitButton(),
+                    _loginAccountLabel(),
+                  ],
                 ),
-                _entryField(
-                  "Id number", 
-                  hintText: "Type your id number here",
-                  icon: Icon(Icons.format_list_numbered, color: Colors.black, size: 50.0,)
-                ),
-                _entryField(
-                  "Email",
-                  hintText: "Type your email here",
-                  icon: Icon(Icons.email, color: Colors.black, size: 50.0,)
-                ),
-                _entryField(
-                  "Phone number", 
-                  hintText: "Type your phone number here",
-                  icon: Icon(Icons.phone_in_talk, color: Colors.black, size: 50.0,)
-                ),
-                _entryField(
-                  "Password",
-                  isPassword: true,
-                  hintText: "Type your password here",
-                  icon: Icon(Icons.lock, color: Colors.black, size: 50.0,)
-                ),
-                _submitButton(),
-                _loginAccountLabel(),
-              ],
-            ),
-          ),
+              ),
+              Positioned(top: 40, left: 0, child: _backButton()),
+            ],
+          ), 
         )
       )
     );

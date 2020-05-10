@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'signupPage.dart';
-import 'forgotPasswordPage.dart';
 
 
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
-
-  final String title;
+class ForgotPasswordPage extends StatefulWidget {
+  ForgotPasswordPage({Key key}) : super(key: key);
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _ForgotPasswordPageState createState() => _ForgotPasswordPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -86,41 +82,12 @@ class _LoginPageState extends State<LoginPage> {
           ],
          color: Theme.of(context).buttonColor),
       child: Text(
-        'Login',
+        'Send',
         style: TextStyle(fontSize: 20, color: Colors.white,),
       ),
     );
   }
 
-
-  Widget _createAccountLabel() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
-      alignment: Alignment.bottomCenter,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Don\'t have an account ?',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()));
-            },
-            child: Text(
-              'Register',
-              style: TextStyle(color: Colors.blue, fontSize: 20, fontWeight: FontWeight.w600),
-            ),
-          )
-        ],
-      ),
-    );
-  }
 
   Widget _logo() {
     return Container(
@@ -135,30 +102,13 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _emailPasswordWidget() {
-    return Column(
-      children: <Widget>[
-        _entryField(
-          "Username", 
-          hintText: "Type your name here",
-          icon: Icon(Icons.person_pin, color: Colors.black, size: 50.0,)
-        ),
-        _entryField(
-          "Password",
-          isPassword: true, 
-          hintText: "Type your password here",
-          icon: Icon(Icons.lock, color: Colors.black, size: 50.0,),
-        ),
-      ],
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-            height: MediaQuery.of(context).size.height * 1.5,
+            height: MediaQuery.of(context).size.height,
             child: Stack(
               children: <Widget>[
                 Container(
@@ -168,26 +118,12 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       _logo(),
-                      _emailPasswordWidget(),
-                      _submitButton(),
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        alignment: Alignment.center,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(context, 
-                              MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
-                          },
-                          child: Text('Forgot Password ?',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500, 
-                              color: Colors.blue
-                            ),
-                          ),
-                        ),
+                      _entryField(
+                        "Email",
+                        hintText: "Type your email here",
+                        icon: Icon(Icons.email, color: Colors.black, size: 50.0)
                       ),
-                      _createAccountLabel(),
+                      _submitButton(),
                       Expanded(
                         flex: 2,
                         child: SizedBox(),
