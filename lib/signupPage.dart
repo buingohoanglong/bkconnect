@@ -13,7 +13,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
 
-  Widget _entryField(String title, {bool isPassword = false, String hintText = ''}) {
+  Widget _entryField(String title, {bool isPassword = false, String hintText = '', Icon icon}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       child: Column(
@@ -27,20 +27,21 @@ class _SignUpPageState extends State<SignUpPage> {
             height: 5,
           ),
           TextField(
-              obscureText: isPassword,
-              decoration: InputDecoration(
-                hintText: hintText,
-                border: InputBorder.none,
-                fillColor: Color(0xfff3f3f4),
-                filled: true,
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50.0))
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(50.0))
-                ),
+            obscureText: isPassword,
+            decoration: InputDecoration(
+              hintText: hintText,
+              icon: icon,
+              border: InputBorder.none,
+              fillColor: Colors.white,
+              filled: true,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(50.0))
               ),
-          )
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(50.0))
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -122,11 +123,32 @@ class _SignUpPageState extends State<SignUpPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 _logo(),
-                _entryField("Username", hintText: "Type your name here"),
-                _entryField("Id number", hintText: "Type your id number here"),
-                _entryField("Email", hintText: "Type your email here"),
-                _entryField("Phone number", hintText: "Type your phone number here"),
-                _entryField("Password", isPassword: true, hintText: "Type your password here"),
+                _entryField(
+                  "Username", 
+                  hintText: "Type your name here",
+                  icon: Icon(Icons.person_pin, color: Colors.black, size: 50.0,),
+                ),
+                _entryField(
+                  "Id number", 
+                  hintText: "Type your id number here",
+                  icon: Icon(Icons.format_list_numbered, color: Colors.black, size: 50.0,)
+                ),
+                _entryField(
+                  "Email",
+                  hintText: "Type your email here",
+                  icon: Icon(Icons.email, color: Colors.black, size: 50.0,)
+                ),
+                _entryField(
+                  "Phone number", 
+                  hintText: "Type your phone number here",
+                  icon: Icon(Icons.phone_in_talk, color: Colors.black, size: 50.0,)
+                ),
+                _entryField(
+                  "Password",
+                  isPassword: true,
+                  hintText: "Type your password here",
+                  icon: Icon(Icons.lock, color: Colors.black, size: 50.0,)
+                ),
                 _submitButton(),
                 _loginAccountLabel(),
               ],

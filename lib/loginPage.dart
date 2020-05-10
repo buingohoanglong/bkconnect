@@ -35,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false, String hintText = ''}) {
+  Widget _entryField(String title, {bool isPassword = false, String hintText = '', Icon icon}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       child: Column(
@@ -52,8 +52,9 @@ class _LoginPageState extends State<LoginPage> {
             obscureText: isPassword,
             decoration: InputDecoration(
               hintText: hintText,
+              icon: icon,
               border: InputBorder.none,
-              fillColor: Color(0xfff3f3f4),
+              fillColor: Colors.white,
               filled: true,
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(50.0))
@@ -137,8 +138,17 @@ class _LoginPageState extends State<LoginPage> {
   Widget _emailPasswordWidget() {
     return Column(
       children: <Widget>[
-        _entryField("Username", hintText: "Type your name here"),
-        _entryField("Password", isPassword: true, hintText: "Type your password here"),
+        _entryField(
+          "Username", 
+          hintText: "Type your name here",
+          icon: Icon(Icons.person_pin, color: Colors.black, size: 50.0,)
+        ),
+        _entryField(
+          "Password",
+          isPassword: true, 
+          hintText: "Type your password here",
+          icon: Icon(Icons.lock, color: Colors.black, size: 50.0,),
+        ),
       ],
     );
   }
