@@ -20,7 +20,7 @@ class _WelcomePageState extends State<WelcomePage> {
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.symmetric(vertical: 13),
+        padding: EdgeInsets.symmetric(vertical: 15),
         alignment: Alignment.center,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -34,7 +34,7 @@ class _WelcomePageState extends State<WelcomePage> {
             color: Theme.of(context).buttonColor),
         child: Text(
           'START',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+          style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w600, color: Colors.white),
         ),
       ),
     );
@@ -42,11 +42,12 @@ class _WelcomePageState extends State<WelcomePage> {
 
   Widget _label() {
     return Container(
-        margin: EdgeInsets.all(1.0),
-        child: const Text(
-          "BK Connect",
-          style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),),
-        );
+      margin: EdgeInsets.all(1.0),
+      child: const Text(
+        "BK Connect",
+        style: TextStyle(fontSize: 50.0, fontWeight: FontWeight.w600, fontFamily: "SegoePrint"),
+      ),
+    );
   }
 
   Widget _logo() {

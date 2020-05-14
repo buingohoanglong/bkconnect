@@ -24,7 +24,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
             ),
             Text('Back',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500))
+                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500,))
           ],
         ),
       ),
@@ -69,7 +69,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return Container(
       width: MediaQuery.of(context).size.width * 0.5,
       margin: EdgeInsets.symmetric(vertical: 15),
-      padding: EdgeInsets.symmetric(vertical: 25),
+      padding: EdgeInsets.symmetric(vertical: 15),
       alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -83,7 +83,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
          color: Theme.of(context).buttonColor),
       child: Text(
         'Send',
-        style: TextStyle(fontSize: 20, color: Colors.white,),
+        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w600),
       ),
     );
   }
@@ -122,6 +122,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         "Email",
                         hintText: "Type your email here",
                         icon: Icon(Icons.email, color: Colors.black, size: 50.0)
+                      ),
+                      SizedBox(
+                        height: 20, 
                       ),
                       _submitButton(),
                       Expanded(

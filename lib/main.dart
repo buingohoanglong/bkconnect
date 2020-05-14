@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
          scaffoldBackgroundColor: Colors.white,
          backgroundColor: Colors.white,
          focusColor: Colors.red,
-         buttonColor: Color.fromARGB(0xFF, 0x00, 0xA9, 0xE2), 
+         buttonColor: Color.fromARGB(0xFF, 0x00, 0xA9, 0xE2),
       ),
       debugShowCheckedModeBanner: false,
       home: WelcomePage(),

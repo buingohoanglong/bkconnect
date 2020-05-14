@@ -69,7 +69,7 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget _submitButton() {
     return Container(
       width: MediaQuery.of(context).size.width * 0.5,
-      padding: EdgeInsets.symmetric(vertical: 25),
+      padding: EdgeInsets.symmetric(vertical: 15),
       alignment: Alignment.center,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(50)),
@@ -82,8 +82,8 @@ class _SignUpPageState extends State<SignUpPage> {
           ],
          color: Theme.of(context).buttonColor),
       child: Text(
-        'Register Now',
-        style: TextStyle(fontSize: 20, color: Colors.white),
+        'Register',
+        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w600),
       ),
     );
   }
