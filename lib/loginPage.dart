@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'signupPage.dart';
 import 'forgotPasswordPage.dart';
+import 'UserInfo.dart';
 
 
 
@@ -13,7 +14,71 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+
+
 class _LoginPageState extends State<LoginPage> {
+
+  GlobalKey<FormState> _key = GlobalKey<FormState>();
+
+  UserInfo _info = UserInfo();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+            height: MediaQuery.of(context).size.height * 1.5,
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 30),
+                  child: Form(
+                    key: _key,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        _logo(),
+                        _entryField(
+                          "Username", 
+                          hintText: "Type your name here",
+                          icon: Icon(Icons.person_pin, color: Colors.black, size: 50.0,),
+                          onSave: (String val) {
+                            _info.setName(val);
+                          }
+                        ),
+                        _entryField(
+                          "Password",
+                          isPassword: true, 
+                          hintText: "Type your password here",
+                          icon: Icon(Icons.lock, color: Colors.black, size: 50.0,),
+                          onSave: (String val) {
+                            _info.setPassword(val);
+                          }
+                        ),
+                        FormField(
+                          builder: (FormFieldState<String> state) {
+                            return _submitButton();
+                          }
+                        ),
+                        _forgotPasswordLabel(),
+                        _createAccountLabel(),
+                        Expanded(
+                          flex: 2,
+                          child: SizedBox(),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Positioned(top: 40, left: 0, child: _backButton()),
+              ],
+            ),
+          )
+        )
+      );
+  }
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -35,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false, String hintText = '', Icon icon}) {
+  Widget _entryField(String title, {bool isPassword = false, String hintText = '', Icon icon, FormFieldSetter<String> onSave}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       child: Column(
@@ -48,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
           SizedBox(
             height: 5,
           ),
-          TextField(
+          TextFormField(
             obscureText: isPassword,
             decoration: InputDecoration(
               hintText: hintText,
@@ -63,6 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                 borderRadius: BorderRadius.all(Radius.circular(50.0))
               ),
             ),
+            onSaved: onSave,
           )
         ],
       ),
@@ -70,26 +136,27 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _submitButton() {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.5,
-      margin: EdgeInsets.symmetric(vertical: 15),
-      padding: EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(50)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.grey.shade200,
-                offset: Offset(2, 4),
-                blurRadius: 5,
-                spreadRadius: 2)
-          ],
-         color: Theme.of(context).buttonColor),
-      child: Text(
-        'Login',
-        style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white,),
+    return InkWell(
+      onTap: () {
+        _key.currentState.save();
+        print("Name: ${_info.getName()}");
+        print("Password: ${_info.getPassword()}");
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.5,
+        margin: EdgeInsets.symmetric(vertical: 15),
+        padding: EdgeInsets.symmetric(vertical: 15),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+            color: Theme.of(context).buttonColor
+        ),
+        child: Text(
+          'Login',
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white,),
+        ),
       ),
-    );
+    ); 
   }
 
 
@@ -135,71 +202,25 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _emailPasswordWidget() {
-    return Column(
-      children: <Widget>[
-        _entryField(
-          "Username", 
-          hintText: "Type your name here",
-          icon: Icon(Icons.person_pin, color: Colors.black, size: 50.0,)
+
+  Widget _forgotPasswordLabel() {
+    return  Container(
+      padding: EdgeInsets.symmetric(vertical: 10),
+      alignment: Alignment.center,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+        },
+        child: Text(
+          'Forgot Password ?',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w500, 
+            color: Colors.blue
+          ),
         ),
-        _entryField(
-          "Password",
-          isPassword: true, 
-          hintText: "Type your password here",
-          icon: Icon(Icons.lock, color: Colors.black, size: 50.0,),
-        ),
-      ],
+      ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-            height: MediaQuery.of(context).size.height * 1.5,
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      _logo(),
-                      _emailPasswordWidget(),
-                      _submitButton(),
-                      Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        alignment: Alignment.center,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(context, 
-                              MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
-                          },
-                          child: Text('Forgot Password ?',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w500, 
-                              color: Colors.blue
-                            ),
-                          ),
-                        ),
-                      ),
-                      _createAccountLabel(),
-                      Expanded(
-                        flex: 2,
-                        child: SizedBox(),
-                      ),
-                    ],
-                  ),
-                ),
-                Positioned(top: 40, left: 0, child: _backButton()),
-              ],
-            ),
-          )
-        )
-      );
-  }
 }

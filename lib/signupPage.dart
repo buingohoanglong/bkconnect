@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'UserInfo.dart';
 
 
 class SignUpPage extends StatefulWidget {
@@ -11,6 +12,86 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+
+  GlobalKey<FormState> _key = GlobalKey<FormState>();
+
+  UserInfo _info = UserInfo();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height * 1.5,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                child: Form(
+                  key: _key,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      _logo(),
+                      _entryField(
+                        "Username", 
+                        hintText: "Type your name here",
+                        icon: Icon(Icons.person_pin, color: Colors.black, size: 50.0,),
+                        onSave: (String val) {
+                          _info.setName(val);
+                        }
+                      ),
+                      _entryField(
+                        "Id number", 
+                        hintText: "Type your id number here",
+                        icon: Icon(Icons.format_list_numbered, color: Colors.black, size: 50.0,),
+                        onSave: (String val) {
+                          _info.setID(val);
+                        }
+                      ),
+                      _entryField(
+                        "Email",
+                        hintText: "Type your email here",
+                        icon: Icon(Icons.email, color: Colors.black, size: 50.0,),
+                        onSave: (String val) {
+                          _info.setEmail(val);
+                        }
+                      ),
+                      _entryField(
+                        "Phone number", 
+                        hintText: "Type your phone number here",
+                        icon: Icon(Icons.phone_in_talk, color: Colors.black, size: 50.0,),
+                        onSave: (String val) {
+                          _info.setPhone(val);
+                        }
+                      ),
+                      _entryField(
+                        "Password",
+                        isPassword: true,
+                        hintText: "Type your password here",
+                        icon: Icon(Icons.lock, color: Colors.black, size: 50.0,),
+                        onSave: (String val) {
+                          _info.setPassword(val);
+                        }
+                      ),
+                      FormField(
+                        builder: (FormFieldState<String> state) {
+                          return _submitButton();
+                        }
+                      ),
+                      _loginAccountLabel(),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(top: 40, left: 0, child: _backButton()),
+            ],
+          ), 
+        )
+      )
+    );
+  }
+
   Widget _backButton() {
     return InkWell(
       onTap: () {
@@ -32,7 +113,7 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  Widget _entryField(String title, {bool isPassword = false, String hintText = '', Icon icon}) {
+  Widget _entryField(String title, {bool isPassword = false, String hintText = '', Icon icon, FormFieldSetter<String> onSave}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
       child: Column(
@@ -45,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
           SizedBox(
             height: 5,
           ),
-          TextField(
+          TextFormField(
             obscureText: isPassword,
             decoration: InputDecoration(
               hintText: hintText,
@@ -60,32 +141,44 @@ class _SignUpPageState extends State<SignUpPage> {
                 borderRadius: BorderRadius.all(Radius.circular(50.0))
               ),
             ),
-          ),
+            onSaved: onSave,
+          )
         ],
       ),
     );
   }
 
+
   Widget _submitButton() {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.5,
-      padding: EdgeInsets.symmetric(vertical: 15),
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(50)),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.grey.shade200,
-                offset: Offset(2, 4),
-                blurRadius: 5,
-                spreadRadius: 2)
-          ],
-         color: Theme.of(context).buttonColor),
-      child: Text(
-        'Register',
-        style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w600),
+    return InkWell(
+      onTap: () {
+        _key.currentState.save();
+        print("Name: ${_info.getName()}");
+        print("ID: ${_info.getID()}");
+        print("Email: ${_info.getEmail()}");
+        print("Phone: ${_info.getPhone()}");
+        print("Password: ${_info.getPassword()}");
+      },
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.5,
+        padding: EdgeInsets.symmetric(vertical: 15),
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(50)),
+            boxShadow: <BoxShadow>[
+              BoxShadow(
+                  color: Colors.grey.shade200,
+                  offset: Offset(2, 4),
+                  blurRadius: 5,
+                  spreadRadius: 2)
+            ],
+          color: Theme.of(context).buttonColor),
+        child: Text(
+          'Register',
+          style: TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w600),
+        ),
       ),
-    );
+    ); 
   }
 
   Widget _loginAccountLabel() {
@@ -129,56 +222,4 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height * 1.5,
-          child: Stack(
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 30),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: <Widget>[
-                    _logo(),
-                    _entryField(
-                      "Username", 
-                      hintText: "Type your name here",
-                      icon: Icon(Icons.person_pin, color: Colors.black, size: 50.0,),
-                    ),
-                    _entryField(
-                      "Id number", 
-                      hintText: "Type your id number here",
-                      icon: Icon(Icons.format_list_numbered, color: Colors.black, size: 50.0,)
-                    ),
-                    _entryField(
-                      "Email",
-                      hintText: "Type your email here",
-                      icon: Icon(Icons.email, color: Colors.black, size: 50.0,)
-                    ),
-                    _entryField(
-                      "Phone number", 
-                      hintText: "Type your phone number here",
-                      icon: Icon(Icons.phone_in_talk, color: Colors.black, size: 50.0,)
-                    ),
-                    _entryField(
-                      "Password",
-                      isPassword: true,
-                      hintText: "Type your password here",
-                      icon: Icon(Icons.lock, color: Colors.black, size: 50.0,)
-                    ),
-                    _submitButton(),
-                    _loginAccountLabel(),
-                  ],
-                ),
-              ),
-              Positioned(top: 40, left: 0, child: _backButton()),
-            ],
-          ), 
-        )
-      )
-    );
-  }
 }
