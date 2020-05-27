@@ -58,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
                         FormField(
                           builder: (FormFieldState<String> state) {
                             return wgt.SubmitButton(
+                              text: "Login",
                               onTap: () {
                                 _key.currentState.save();
                                 print("Name: ${_info.getName()}");

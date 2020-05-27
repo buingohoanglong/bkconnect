@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widgets.dart' as wgt;
 
 
 
@@ -10,7 +11,7 @@ class ForgotPasswordPage extends StatefulWidget {
 }
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
-  Widget _backButton() {
+  /*Widget _backButton() {
     return InkWell(
       onTap: () {
         Navigator.pop(context);
@@ -100,7 +101,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       ),
       child: Image.asset('assets/images/hcmut.png'),
     );
-  }
+  }*/
 
 
   @override
@@ -117,8 +118,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      _logo(),
-                      _entryField(
+                      wgt.Logo(),
+                      wgt.EntryField(
                         "Email",
                         hintText: "Type your email here",
                         icon: Icon(Icons.email, color: Colors.black, size: 50.0)
@@ -126,7 +127,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       SizedBox(
                         height: 20, 
                       ),
-                      _submitButton(),
+                      wgt.SubmitButton(
+                        text: "Send",
+                        onTap: () {
+                          print("Email: ");
+                        },
+                      ),
                       Expanded(
                         flex: 2,
                         child: SizedBox(),
@@ -134,7 +140,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     ],
                   ),
                 ),
-                Positioned(top: 40, left: 0, child: _backButton()),
+                Positioned(top: 40, left: 0, child: wgt.BackButton()),
               ],
             ),
           )

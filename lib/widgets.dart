@@ -78,9 +78,10 @@ class EntryField extends StatelessWidget {
 
 class SubmitButton extends StatelessWidget {
 
+  String text;
   GestureTapCallback onTap;
 
-  SubmitButton({this.onTap});
+  SubmitButton({this.text, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +97,7 @@ class SubmitButton extends StatelessWidget {
             color: Theme.of(context).buttonColor
         ),
         child: Text(
-          'Login',
+          text,
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white,),
         ),
       ),
