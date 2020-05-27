@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'signupPage.dart';
-import 'forgotPasswordPage.dart';
 import 'UserInfo.dart';
+import 'widgets.dart' as wgt;
 
 
 
@@ -38,8 +37,8 @@ class _LoginPageState extends State<LoginPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        _logo(),
-                        _entryField(
+                        wgt.Logo(),
+                        wgt.EntryField(
                           "Username", 
                           hintText: "Type your name here",
                           icon: Icon(Icons.person_pin, color: Colors.black, size: 50.0,),
@@ -47,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                             _info.setName(val);
                           }
                         ),
-                        _entryField(
+                        wgt.EntryField(
                           "Password",
                           isPassword: true, 
                           hintText: "Type your password here",
@@ -58,11 +57,17 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         FormField(
                           builder: (FormFieldState<String> state) {
-                            return _submitButton();
+                            return wgt.SubmitButton(
+                              onTap: () {
+                                _key.currentState.save();
+                                print("Name: ${_info.getName()}");
+                                print("Password: ${_info.getPassword()}");
+                              },
+                            );
                           }
                         ),
-                        _forgotPasswordLabel(),
-                        _createAccountLabel(),
+                        wgt.ForgotPasswordLabel(),
+                        wgt.RegisterLabel(),
                         Expanded(
                           flex: 2,
                           child: SizedBox(),
@@ -71,156 +76,12 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                Positioned(top: 40, left: 0, child: _backButton()),
+                Positioned(top: 40, left: 0, child: wgt.BackButton()),
               ],
             ),
           )
         )
       );
-  }
-
-  Widget _backButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
-      },
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(left: 0, top: 10, bottom: 10),
-              child: Icon(Icons.keyboard_arrow_left, color: Colors.black),
-            ),
-            Text('Back',
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),)
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _entryField(String title, {bool isPassword = false, String hintText = '', Icon icon, FormFieldSetter<String> onSave}) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            title,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20,),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          TextFormField(
-            obscureText: isPassword,
-            decoration: InputDecoration(
-              hintText: hintText,
-              icon: icon,
-              border: InputBorder.none,
-              fillColor: Colors.white,
-              filled: true,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(50.0))
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(50.0))
-              ),
-            ),
-            onSaved: onSave,
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _submitButton() {
-    return InkWell(
-      onTap: () {
-        _key.currentState.save();
-        print("Name: ${_info.getName()}");
-        print("Password: ${_info.getPassword()}");
-      },
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.5,
-        margin: EdgeInsets.symmetric(vertical: 15),
-        padding: EdgeInsets.symmetric(vertical: 15),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-            color: Theme.of(context).buttonColor
-        ),
-        child: Text(
-          'Login',
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white,),
-        ),
-      ),
-    ); 
-  }
-
-
-  Widget _createAccountLabel() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
-      alignment: Alignment.bottomCenter,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'Don\'t have an account ?',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-          ),
-          SizedBox(
-            width: 10,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SignUpPage()));
-            },
-            child: Text(
-              'Register',
-              style: TextStyle(color: Colors.blue, fontSize: 20, fontWeight: FontWeight.w600),
-            ),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _logo() {
-    return Container(
-      margin: EdgeInsets.all(2.0),
-      padding: EdgeInsets.only(
-        top: 70.0,
-        bottom: 20.0,
-        left: 70.0,
-        right: 70.0,
-      ),
-      child: Image.asset('assets/images/hcmut.png'),
-    );
-  }
-
-
-  Widget _forgotPasswordLabel() {
-    return  Container(
-      padding: EdgeInsets.symmetric(vertical: 10),
-      alignment: Alignment.center,
-      child: InkWell(
-        onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
-        },
-        child: Text(
-          'Forgot Password ?',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500, 
-            color: Colors.blue
-          ),
-        ),
-      ),
-    );
   }
 
 }
