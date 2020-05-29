@@ -40,7 +40,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           keyboardType: TextInputType.emailAddress,
                           icon: Icon(Icons.email, color: Colors.black, size: 50.0),
                           validator: (String val) {
-                            return val.isEmpty ? "Email cannot be empty" : null;
+                            if(val.isNotEmpty) {
+                              bool isValidEmail = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@hcmut\.edu\.vn").hasMatch(val);
+                              return isValidEmail ? null : "Invalid email address";
+                            }
+                            return "Email cannot be empty";
                           },
                           onSave: (String val) {
                             _info.setEmail(val);
