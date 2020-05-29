@@ -38,6 +38,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         "Username", 
                         hintText: "Type your name here",
                         icon: Icon(Icons.person_pin, color: Colors.black, size: 50.0,),
+                        validator: (String val) {
+                          return val.isEmpty ? "Username cannot be empty" : null;
+                        },
                         onSave: (String val) {
                           _info.setName(val);
                         }
@@ -45,7 +48,11 @@ class _SignUpPageState extends State<SignUpPage> {
                       wgt.EntryField(
                         "Id number", 
                         hintText: "Type your id number here",
+                        keyboardType: TextInputType.number,
                         icon: Icon(Icons.format_list_numbered, color: Colors.black, size: 50.0,),
+                        validator: (String val) {
+                          return val.isEmpty ? "Id number cannot be empty" : null;
+                        },
                         onSave: (String val) {
                           _info.setID(val);
                         }
@@ -53,7 +60,15 @@ class _SignUpPageState extends State<SignUpPage> {
                       wgt.EntryField(
                         "Email",
                         hintText: "Type your email here",
+                        keyboardType: TextInputType.emailAddress,
                         icon: Icon(Icons.email, color: Colors.black, size: 50.0,),
+                        validator: (String val) {
+                          if(val.isNotEmpty) {
+                            bool isValidEmail = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@hcmut\.edu\.vn").hasMatch(val);
+                            return isValidEmail ? null : "Invalid email address";
+                          }
+                          return "Email cannot be empty";
+                        },
                         onSave: (String val) {
                           _info.setEmail(val);
                         }
@@ -61,7 +76,11 @@ class _SignUpPageState extends State<SignUpPage> {
                       wgt.EntryField(
                         "Phone number", 
                         hintText: "Type your phone number here",
+                        keyboardType: TextInputType.number,
                         icon: Icon(Icons.phone_in_talk, color: Colors.black, size: 50.0,),
+                        validator: (String val) {
+                          return val.isEmpty ? "Phone number cannot be empty" : null;
+                        },
                         onSave: (String val) {
                           _info.setPhone(val);
                         }
@@ -71,6 +90,9 @@ class _SignUpPageState extends State<SignUpPage> {
                         isPassword: true,
                         hintText: "Type your password here",
                         icon: Icon(Icons.lock, color: Colors.black, size: 50.0,),
+                        validator: (String val) {
+                          return val.isEmpty ? "Password cannot be empty" : null;
+                        },
                         onSave: (String val) {
                           _info.setPassword(val);
                         }
@@ -80,12 +102,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           return wgt.SubmitButton(
                             text: "Register",
                             onTap: () {
-                              _key.currentState.save();
-                              print("Name: ${_info.getName()}");
-                              print("ID: ${_info.getID()}");
-                              print("Email: ${_info.getEmail()}");
-                              print("Phone: ${_info.getPhone()}");
-                              print("Password: ${_info.getPassword()}");
+                              if(_key.currentState.validate()) {
+                                _key.currentState.save();
+                                print("Name: ${_info.getName()}");
+                                print("ID: ${_info.getID()}");
+                                print("Email: ${_info.getEmail()}");
+                                print("Phone: ${_info.getPhone()}");
+                                print("Password: ${_info.getPassword()}");
+                              }
                             },
                           );
                         }

@@ -37,7 +37,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         wgt.EntryField(
                           "Email",
                           hintText: "Type your email here",
+                          keyboardType: TextInputType.emailAddress,
                           icon: Icon(Icons.email, color: Colors.black, size: 50.0),
+                          validator: (String val) {
+                            return val.isEmpty ? "Email cannot be empty" : null;
+                          },
                           onSave: (String val) {
                             _info.setEmail(val);
                           },
@@ -50,8 +54,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             return wgt.SubmitButton(
                               text: "Send",
                               onTap: () {
-                                _key.currentState.save();
-                                print("Email: ${_info.getEmail()}");
+                                if(_key.currentState.validate()) {
+                                  _key.currentState.save();
+                                  print("Email: ${_info.getEmail()}");
+                                }
                               },
                             );
                           }

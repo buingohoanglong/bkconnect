@@ -37,7 +37,11 @@ class EntryField extends StatelessWidget {
   String hintText;
   Icon icon;
   FormFieldSetter<String> onSave;
-  EntryField(this.title, {this.isPassword = false, this.hintText = '', this.icon, this.onSave});
+  FormFieldValidator<String> validator;
+  TextInputType keyboardType;
+
+  EntryField(this.title, {this.isPassword = false, this.hintText = '', this.icon, 
+            this.onSave, this.validator, this.keyboardType});
   
   @override
   Widget build(BuildContext context) {
@@ -55,6 +59,7 @@ class EntryField extends StatelessWidget {
           ),
           TextFormField(
             obscureText: isPassword,
+            keyboardType: keyboardType,
             decoration: InputDecoration(
               hintText: hintText,
               icon: icon,
@@ -68,6 +73,7 @@ class EntryField extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(50.0))
               ),
             ),
+            validator: validator,
             onSaved: onSave,
           )
         ],

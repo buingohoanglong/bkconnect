@@ -42,6 +42,9 @@ class _LoginPageState extends State<LoginPage> {
                           "Username", 
                           hintText: "Type your name here",
                           icon: Icon(Icons.person_pin, color: Colors.black, size: 50.0,),
+                          validator: (String val) {
+                            return val.isEmpty ? "Username cannot be empty" : null;
+                          },
                           onSave: (String val) {
                             _info.setName(val);
                           }
@@ -51,6 +54,9 @@ class _LoginPageState extends State<LoginPage> {
                           isPassword: true, 
                           hintText: "Type your password here",
                           icon: Icon(Icons.lock, color: Colors.black, size: 50.0,),
+                          validator: (String val) {
+                            return val.isEmpty ? "Password cannot be empty" : null;
+                          },
                           onSave: (String val) {
                             _info.setPassword(val);
                           }
@@ -60,9 +66,11 @@ class _LoginPageState extends State<LoginPage> {
                             return wgt.SubmitButton(
                               text: "Login",
                               onTap: () {
-                                _key.currentState.save();
-                                print("Name: ${_info.getName()}");
-                                print("Password: ${_info.getPassword()}");
+                                if(_key.currentState.validate()) {
+                                  _key.currentState.save();
+                                  print("Name: ${_info.getName()}");
+                                  print("Password: ${_info.getPassword()}");
+                                }
                               },
                             );
                           }
