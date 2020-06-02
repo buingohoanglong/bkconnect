@@ -7,8 +7,13 @@ class InfoManager:
         self._db = self._client["mydatabase"]
         self._collection = self._db["users"]
 
-    def checkDuplicate(self, username):
+    def authorizeSignUp(self, username):
         if self._collection.count({"username": username}) == 1:
+            return False
+        return True
+
+    def authorizeSignIn(self, username, password):
+        if self._collection.count({"username": username, "password": password}) == 1:
             return True
         return False
 

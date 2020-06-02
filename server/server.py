@@ -9,14 +9,17 @@ infoManager = InfoManager()
 @app.route("/login/",methods=["POST"])
 def login():
     content = request.json
-    user_name = content["username"]
-    password = content["password"]
-    print(user_name + " login with password " + password)   
-    d = {
-        "username": user_name,
-        "password": password,
+    user = {
+        "username": content["username"],
+        "password": content["password"],
     }
-    return jsonify(d)    
+    
+    if infoManager.authorizeSignIn(username=user["username"], password=user["password"]):
+        msg = {"status" : { "type" : "success" ,   "message" : "login successfully"}}
+        return jsonify(msg)
+ 
+    msg = {"status" : { "type" : "failure" ,   "message" : "invalid username or password"}}
+    return jsonify(msg) 
             
 
 @app.route("/register/", methods=["POST"])
@@ -30,13 +33,14 @@ def register():
         "password": content["password"]
     }
     
-    if infoManager.checkDuplicate(user["username"]):
-        msg = {"status" : { "type" : "failure" ,   "message" : "username already taken"}}
+    if infoManager.authorizeSignUp(username=user["username"]):
+        infoManager.addUser(user)
+        infoManager.printDB()
+        msg = {"status" : { "type" : "success" ,   "message" : "register successfully"}}
         return jsonify(msg)
-    
-    infoManager.addUser(user)
+
     infoManager.printDB()
-    msg = {"status" : { "type" : "success" ,   "message" : "register successfully"}}
+    msg = {"status" : { "type" : "failure" ,   "message" : "username already taken"}}
     return jsonify(msg)
 
 
