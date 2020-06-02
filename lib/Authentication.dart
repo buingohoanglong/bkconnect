@@ -4,21 +4,17 @@ import 'UserInfo.dart';
 
 
 class Authentication {
-  Future<void> signUp(UserInfo info) {
+  Future<http.Response> signUp(UserInfo info) async {
     var body = info.toJson();
     var header = {"Content-Type": "application/json"};
     final url = 'https://bkconnect.serveo.net/register/';
-    http.post(url,headers: header, body: body).then((response) {
-      print(response.body); 
-    });
+    return await http.post(url,headers: header, body: body);
   }
 
-  Future<void> signIn(UserInfo info) {
+  Future<http.Response> signIn(UserInfo info) async {
     var body = info.toJson();
     var header = {"Content-Type": "application/json"};
     final url = 'https://bkconnect.serveo.net/login/';
-    http.post(url,headers: header, body: body).then((response) {
-      print(response.body); 
-    });
+    return await http.post(url,headers: header, body: body);
   }
 }

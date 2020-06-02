@@ -15,7 +15,17 @@ def login():
     }
     
     if infoManager.authorizeSignIn(username=user["username"], password=user["password"]):
-        msg = {"status" : { "type" : "success" ,   "message" : "login successfully"}}
+        info = infoManager.getUser(user["username"])
+        msg = {
+            "status" : { "type" : "success" ,   "message" : "login successfully"},
+            "body": {
+                "username": info["username"],
+                "id": info["id"],
+                "email": info["email"],
+                "phone": info["phone"],
+                "password": ""
+            }
+        }
         return jsonify(msg)
  
     msg = {"status" : { "type" : "failure" ,   "message" : "invalid username or password"}}

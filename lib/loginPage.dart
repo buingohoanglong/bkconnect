@@ -1,6 +1,8 @@
 import 'package:bkconnect/Authentication.dart';
+import 'package:bkconnect/profilePage.dart';
 import 'package:flutter/material.dart';
 import 'UserInfo.dart';
+import 'dart:convert';
 import 'widgets.dart' as wgt;
 
 
@@ -70,7 +72,11 @@ class _LoginPageState extends State<LoginPage> {
                               onTap: () {
                                 if(_key.currentState.validate()) {
                                   _key.currentState.save();
-                                  auth.signIn(_info);
+                                  auth.signIn(_info).then((response) {
+                                    print(response.body);
+                                    var user = UserInfo.fromJson(json.encode(json.decode(response.body)["body"]));
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(info: user)));
+                                  });
                                 }
                               },
                             );
