@@ -1,8 +1,10 @@
 from flask import Flask,request,jsonify
+from InfoManager import InfoManager
 
 
 app = Flask(__name__)
 
+infoManager = InfoManager()
 
 @app.route("/login/",methods=["POST"])
 def login():
@@ -28,15 +30,14 @@ def register():
         "password": content["password"]
     }
     
-    d = {
-        "username": user_name,
-        "email": email,
-        "password": password,
-        "phone": phone,
-        "id": id,
-    } 
-    return jsonify(d)    
-
+    if infoManager.checkDuplicate(user["username"]):
+        msg = {"status" : { "type" : "failure" ,   "message" : "username already taken"}}
+        return jsonify(msg)
+    
+    infoManager.addUser(user)
+    infoManager.printDB()
+    msg = {"status" : { "type" : "success" ,   "message" : "register successfully"}}
+    return jsonify(msg)
 
 
 if __name__ == "__main__":
