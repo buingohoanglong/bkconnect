@@ -1,3 +1,4 @@
+import 'package:bkconnect/Authentication.dart';
 import 'package:flutter/material.dart';
 import 'UserInfo.dart';
 import 'widgets.dart' as wgt;
@@ -17,6 +18,7 @@ class _SignUpPageState extends State<SignUpPage> {
   GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   UserInfo _info = UserInfo();
+  Authentication auth = Authentication();
 
   @override
   Widget build(BuildContext context) {
@@ -104,11 +106,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             onTap: () {
                               if(_key.currentState.validate()) {
                                 _key.currentState.save();
-                                print("Name: ${_info.getName()}");
-                                print("ID: ${_info.getID()}");
-                                print("Email: ${_info.getEmail()}");
-                                print("Phone: ${_info.getPhone()}");
-                                print("Password: ${_info.getPassword()}");
+                                auth.signUp(_info);
                               }
                             },
                           );
