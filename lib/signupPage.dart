@@ -1,5 +1,7 @@
 import 'package:bkconnect/Authentication.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'UserInfo.dart';
 import 'widgets.dart' as wgt;
 
@@ -18,7 +20,41 @@ class _SignUpPageState extends State<SignUpPage> {
   GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   UserInfo _info = UserInfo();
-  Authentication auth = Authentication();
+  Authentication _auth = Authentication();
+
+  void submitCallback(http.Response response) {
+    print(response.body);
+    var msg = json.decode(response.body);
+    if(msg["status"] == "success") {
+      onSuccess(msg);
+    }
+    else {
+      showAlertDialog(msg);
+    }
+  } 
+
+  void onSuccess(Map<String, dynamic> msg) {
+    showAlertDialog(msg);
+    Navigator.pop(context);
+  }
+
+  void showAlertDialog(Map<String, dynamic> msg) {
+    showDialog(
+      context: context,
+      child: new AlertDialog(
+        title: Text(msg["status"]),
+        content: Text(msg["type"]),
+        actions: [
+          new FlatButton(
+            child: const Text("OK"),
+            onPressed: () {
+               Navigator.pop(context);
+            }
+          ),
+        ],
+      ),
+    );                  
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,10 +139,17 @@ class _SignUpPageState extends State<SignUpPage> {
                         builder: (FormFieldState<String> state) {
                           return wgt.SubmitButton(
                             text: "Register",
-                            onTap: () {
+                            onTap: () async {
                               if(_key.currentState.validate()) {
                                 _key.currentState.save();
-                                auth.signUp(_info);
+                                try {
+                                  var response = await _auth.signUp(_info);
+                                  submitCallback(response);
+                                } catch(e) {
+                                  print(e);
+                                  var msg = {"status": "failure", "type": "lost connection"};
+                                  showAlertDialog(msg);
+                                }
                               }
                             },
                           );
