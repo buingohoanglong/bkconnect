@@ -1,6 +1,7 @@
 import 'package:bkconnect/Authentication.dart';
 import 'package:bkconnect/profilePage.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'UserInfo.dart';
 import 'dart:convert';
 import 'widgets.dart' as wgt;
@@ -23,7 +24,44 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   UserInfo _info = UserInfo();
-  Authentication auth = Authentication();
+  Authentication _auth = Authentication();
+
+  void submitCallback(http.Response response) {
+    print(response.body);
+    var msg = json.decode(response.body);
+    if(msg["status"] == "success") {
+      onSuccess(msg);
+    }
+    else {
+      showAlertDialog(msg);
+    }
+  } 
+
+  void onSuccess(Map<String, dynamic> msg) {
+    var info = UserInfo.fromMap(msg["body"]);
+    Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (context) => ProfilePage(info: info))
+    );
+  }
+
+  void showAlertDialog(Map<String, dynamic> msg) {
+    showDialog(
+      context: context,
+      child: new AlertDialog(
+        title: Text(msg["status"]),
+        content: Text(msg["type"]),
+        actions: [
+          new FlatButton(
+            child: const Text("OK"),
+            onPressed: () {
+               Navigator.pop(context);
+            }
+          ),
+        ],
+      ),
+    );                  
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,14 +107,17 @@ class _LoginPageState extends State<LoginPage> {
                           builder: (FormFieldState<String> state) {
                             return wgt.SubmitButton(
                               text: "Login",
-                              onTap: () {
+                              onTap: () async {
                                 if(_key.currentState.validate()) {
                                   _key.currentState.save();
-                                  auth.signIn(_info).then((response) {
-                                    print(response.body);
-                                    var user = UserInfo.fromJson(json.encode(json.decode(response.body)["body"]));
-                                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProfilePage(info: user)));
-                                  });
+                                  try {
+                                    var response = await _auth.signIn(_info);
+                                    submitCallback(response);
+                                  } catch(e) {
+                                    print(e);
+                                    var msg = {"status": "failure", "type": "lost connection"};
+                                    showAlertDialog(msg);
+                                  }
                                 }
                               },
                             );

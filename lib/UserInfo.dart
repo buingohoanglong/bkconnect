@@ -27,25 +27,34 @@ class UserInfo {
   String getEmail() {return _email;}
   String getPassword() {return _password;}
 
-  static UserInfo fromJson(String jsonString) {
-    final data = json.decode(jsonString);
+  static UserInfo fromMap(Map<String, dynamic> info) {
     return UserInfo(
-      name: data["username"],
-      id: data["id"],
-      email: data["email"],
-      phone: data["phone"],
-      password: data["password"],
+      name: info["username"],
+      id: info["id"],
+      email: info["email"],
+      phone: info["phone"],
+      password: info["password"]
     );
   }
 
-  String toJson() {
-    final data = {
+  Map<String, dynamic> toMap() {
+    final info = {
       "username": _name,
       "id": _id,
       "email": _email,
       "phone": _phone,
       "password": _password,
     };
-    return json.encode(data);
+    return info;
+  }
+
+  static UserInfo fromJson(String jsonString) {
+    final info = json.decode(jsonString);
+    return UserInfo.fromMap(info);
+  }
+
+  String toJson() {
+    final info = this.toMap();
+    return json.encode(info);
   }
 }

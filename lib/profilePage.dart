@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({Key key, this.info}) : super(key: key);
+  ProfilePage({this.info});
 
   final UserInfo info;
 
