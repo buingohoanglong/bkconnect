@@ -33,23 +33,11 @@ class _ProfilePageState extends State<ProfilePage> {
         TableRow(
           children: <Widget>[
             Padding(
-              child: Text("Full Name:", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)),
+              child: Text("Full name:", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Colors.black)),
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
             ),
             Padding(
-              child:Text(widget.info.getName(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)), 
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
-            ),
-          ],
-        ),
-        TableRow(
-          children: <Widget>[
-            Padding(
-              child: Text("Student ID:", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)), 
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
-            ),
-            Padding(
-              child: Text(widget.info.getID(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)), 
+              child:Text(widget.info.getName(), style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Color(0xff828282))), 
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
             ),
           ],
@@ -57,11 +45,11 @@ class _ProfilePageState extends State<ProfilePage> {
         TableRow(
           children: <Widget>[
             Padding(
-              child: Text("Phone:", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)), 
+              child: Text("Student ID:", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Colors.black)), 
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
             ),
             Padding(
-              child: Text(widget.info.getPhone(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)), 
+              child: Text(widget.info.getID(), style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Color(0xff828282))), 
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
             ),
           ],
@@ -69,11 +57,23 @@ class _ProfilePageState extends State<ProfilePage> {
         TableRow(
           children: <Widget>[
             Padding(
-              child: Text("Email:", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)), 
+              child: Text("Phone:", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Colors.black)), 
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
             ),
             Padding(
-              child: Text(widget.info.getEmail(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)), 
+              child: Text(widget.info.getPhone(), style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Color(0xff828282))), 
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
+            ),
+          ],
+        ),
+        TableRow(
+          children: <Widget>[
+            Padding(
+              child: Text("Email:", style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Colors.black)), 
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
+            ),
+            Padding(
+              child: Text(widget.info.getEmail(), style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20, color: Color(0xff828282))), 
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
             ),
           ],
@@ -109,9 +109,19 @@ class _ProfilePageState extends State<ProfilePage> {
                     Navigator.pop(context);
                   },
                 ),
+                SizedBox(
+                  height: 10,
+                ),
               ],
             ),
           ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+//        tooltip: 'Camera',
+        child: Icon(Icons.camera),
+        elevation: 2.0,
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
