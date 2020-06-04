@@ -49,8 +49,24 @@ class _LoginPageState extends State<LoginPage> {
     showDialog(
       context: context,
       child: new AlertDialog(
-        title: Text(msg["status"]),
-        content: Text(msg["type"]),
+        title: Text(
+          msg["status"],
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.red,
+            fontSize: 30,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        content: Text(
+          msg["type"],
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 30,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
         actions: [
           new FlatButton(
             child: const Text("OK"),

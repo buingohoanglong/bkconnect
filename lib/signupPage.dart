@@ -1,4 +1,5 @@
 import 'package:bkconnect/Authentication.dart';
+import 'package:bkconnect/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -34,22 +35,40 @@ class _SignUpPageState extends State<SignUpPage> {
   } 
 
   void onSuccess(Map<String, dynamic> msg) {
-    showAlertDialog(msg);
-    Navigator.pop(context);
+    Navigator.push(
+      context, 
+      MaterialPageRoute(builder: (context) => LoginPage())
+    );
   }
 
   void showAlertDialog(Map<String, dynamic> msg) {
     showDialog(
       context: context,
       child: new AlertDialog(
-        title: Text(msg["status"]),
-        content: Text(msg["type"]),
+        title: Text(
+          msg["status"],
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.red,
+            fontSize: 30,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        content: Text(
+          msg["type"],
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 30,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
         actions: [
           new FlatButton(
             child: const Text("OK"),
             onPressed: () {
-               Navigator.pop(context);
-            }
+              Navigator.pop(context);
+            },
           ),
         ],
       ),
