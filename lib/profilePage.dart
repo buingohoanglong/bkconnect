@@ -1,5 +1,6 @@
 import 'package:bkconnect/UserInfo.dart';
 import 'package:flutter/material.dart';
+import 'widgets.dart';
 
 
 class ProfilePage extends StatefulWidget {
@@ -12,47 +13,72 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  Widget _signOutButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pop(context);
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      if (index == 2) return;
+      this._selectedIndex = index;
+    });
+  }
+
+
+  Widget _infoLabel() {
+    return Table(
+      columnWidths: {
+        0: FlexColumnWidth(2.0),
+        1: FlexColumnWidth(3.0),
       },
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: EdgeInsets.symmetric(vertical: 15),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(50)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  color: Color(0xffdf8e33).withAlpha(100),
-                  offset: Offset(2, 4),
-                  blurRadius: 8,
-                  spreadRadius: 2)
-            ],
-            color: Theme.of(context).buttonColor),
-        child: Text(
-          'Sign out',
-          style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.w600, color: Colors.white),
+      children: <TableRow>[
+        TableRow(
+          children: <Widget>[
+            Padding(
+              child: Text("Full Name:", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
+            ),
+            Padding(
+              child:Text(widget.info.getName(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)), 
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
+            ),
+          ],
         ),
-      ),
-    );
-  }
-
-  Widget _label(String value) {
-    return Container(
-      margin: EdgeInsets.all(1.0),
-      child: Text(
-        value,
-        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600, fontFamily: "SegoePrint"),
-      ),
-    );
-  }
-
-  Widget _image() {
-    return Container(
-        margin: EdgeInsets.all(1.0),
-        child: Image.asset('assets/images/hcmut.png'),
+        TableRow(
+          children: <Widget>[
+            Padding(
+              child: Text("Student ID:", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)), 
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
+            ),
+            Padding(
+              child: Text(widget.info.getID(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)), 
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
+            ),
+          ],
+        ),
+        TableRow(
+          children: <Widget>[
+            Padding(
+              child: Text("Phone:", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)), 
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
+            ),
+            Padding(
+              child: Text(widget.info.getPhone(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)), 
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
+            ),
+          ],
+        ),
+        TableRow(
+          children: <Widget>[
+            Padding(
+              child: Text("Email:", style: TextStyle(fontWeight: FontWeight.w900, fontSize: 20)), 
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
+            ),
+            Padding(
+              child: Text(widget.info.getEmail(), style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20)), 
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15)
+            ),
+          ],
+        ),
+      ],
     );
   }
 
@@ -62,46 +88,59 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       body:SingleChildScrollView(
         child:Container(
-            padding: EdgeInsets.symmetric(horizontal: 20),
             height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      color: Colors.grey.shade200,
-                      offset: Offset(2, 4),
-                      blurRadius: 5,
-                      spreadRadius: 2)
-                ],
+                borderRadius: BorderRadius.all(Radius.circular(30)),
                 color: Colors.white),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                _image(),
-                SizedBox(
-                  height: 20,
+                GeneralImage(
+                  size: MediaQuery.of(context).size.width * 0.5,
+                  image: Image.asset('assets/images/TC_avatar.png', fit: BoxFit.cover),
+                  roundRadius: 100.0,
                 ),
-                _label("Full Name: ${widget.info.getName()}"),
-                SizedBox(
-                  height: 30,
+                _infoLabel(),
+                SubmitButton(
+                  text: "Sign out",
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                 ),
-                _label("Student ID: ${widget.info.getID()}"),
-                SizedBox(
-                  height: 30,
-                ),
-                _label("Phone: ${widget.info.getPhone()}"),
-                SizedBox(
-                  height: 30,
-                ),
-                _label("Email: ${widget.info.getEmail()}"),
-                SizedBox(
-                  height: 30,
-                ),
-                _signOutButton(),
               ],
             ),
           ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: const Color(0xe5ffffff),
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            title: Text('Nearby'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            title: Text('Camera'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            title: Text('News'),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            title: Text('Profile'),
+          ),
+        ],
+        currentIndex: this._selectedIndex,
+        selectedItemColor: Color(0xff1588db),
+        onTap: this._onItemTapped,
       ),
     );
   }

@@ -219,3 +219,29 @@ class LoginLabel extends StatelessWidget {
     );
   }
 }
+
+class GeneralImage extends StatelessWidget {
+  GeneralImage({@required this.size, @required this.image, this.roundRadius});
+
+  double size;
+  Image image;
+  double roundRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: this.size,
+      height: this.size,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(
+          Radius.circular(this.roundRadius),
+        ),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(this.roundRadius)),
+        child: this.image,
+      ),
+    );
+  }
+}
+

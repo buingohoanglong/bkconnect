@@ -71,8 +71,8 @@ class _LoginPageState extends State<LoginPage> {
           new FlatButton(
             child: const Text("OK"),
             onPressed: () {
-               Navigator.pop(context);
-            }
+              Navigator.pop(context);
+            },
           ),
         ],
       ),
