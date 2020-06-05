@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'UserInfo.dart';
 import 'dart:convert';
 import 'widgets.dart' as wgt;
-
+import 'basePage.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
     var info = UserInfo.fromMap(msg["body"]);
     Navigator.push(
       context, 
-      MaterialPageRoute(builder: (context) => ProfilePage(info: info))
+      MaterialPageRoute(builder: (context) => BasePage(info: info))
     );
   }
 
