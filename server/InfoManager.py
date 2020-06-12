@@ -26,3 +26,6 @@ class InfoManager:
     def printDB(self):
         for document in self._collection.find():
             print(document)
+
+    def deleteAllDocument(self, collection):
+        collection.delete_many({})

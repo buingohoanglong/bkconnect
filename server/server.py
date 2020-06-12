@@ -12,9 +12,19 @@ jwt = JWTManager(app)
 
 infoManager = InfoManager()
 
-@app.route("/test/", methods=["GET"])
-def test():
-    return "Hello World"
+#@app.route("/test/", methods=["GET"])
+#def test():
+#    return "Hello World"
+
+#@app.route("/printDB/", methods=["GET"])
+#def printDB():
+#    infoManager.printDB()
+#    return ""
+
+#@app.route("/deleteAllDocument/", methods=["GET"])
+#def deleteAllDocument():
+#    infoManager.deleteAllDocument(infoManager._collection)
+#    return ""
 
 @app.route("/login/",methods=["POST"])
 def login():
@@ -46,7 +56,8 @@ def register():
         return jsonify(msg)
 
     if infoManager.authorizeSignUp(username=user["username"]):
-        msg = {"status": "success", "message": "registered information"}
+        infoManager.addUser(user)
+        msg = {"status": "success", "message": "registered successfully"}
         return jsonify(msg)
     else:
         msg = {"status": "failure", "message": "username already taken"}
